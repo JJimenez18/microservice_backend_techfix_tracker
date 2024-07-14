@@ -1,0 +1,14 @@
+node_modules
+log
+build
+.vscode
+*.js
+*.zip
+*.txt
+*.jpeg
+*.jpg
+*.png
+*.pdf
+*.csv
+*.pem
+*.env
