@@ -7,4 +7,10 @@ export interface IToken {
 	fechaModifico: string;
 	estatus: string;
 	descripcion: string;
-  }
+}
+
+export interface ICredencialesLoginO {
+	id_login: string;
+	nombre_usuario: string;
+	contrasena_login: string;
+}

@@ -2,7 +2,7 @@ import { ISPDetalle } from '../../models/general';
 
 export class SpListas {
   private static instance: SpListas;
-  private nombreDb = 'nombreBaseDatos';
+  private nombreDb = 'techfix_tracker_db';
 
   static getInstance(): SpListas {
     if (!this.instance) {
@@ -11,9 +11,9 @@ export class SpListas {
     return this.instance;
   }
 
-  public CONSULTA_TOKEN: ISPDetalle = {
+  public CREDENCIALES_USUARIO_LOGIN: ISPDetalle = {
     nombreDb: this.nombreDb,
-    nombreSp: 'SP_nombre',
+    nombreSp: 'SP_Valida_Login',
     numParams: 1,
     parametros: this.getParams,
     llamarSP: this.llamarSP,
