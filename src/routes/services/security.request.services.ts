@@ -1,28 +1,36 @@
 import { MetodosBD } from '../../database/mysql/methods';
-import { IRespuestaGenerica } from '../../models/general';
-import { generateRandomString, generateToken } from '../../utils/auth';
-import { getHashPassword, validaPassAlmacenada } from '../../utils/hashUtil';
+import { IRespGen } from '../../models/general';
+import { generateToken } from '../../utils/auth';
+import { validaPassAlmacenada } from '../../utils/hashUtil';
+
 const bd = MetodosBD.getInstance();
+
 export const generaTokenServices = async (data: {
   username: string;
   password: string;
-}): Promise<IRespuestaGenerica<{ token: string }>> => {
+}): Promise<IRespGen<{ token: string }>> => {
   const { username, password } = data;
-  const {contrasena_login, nombre_usuario} = await bd.detalleLoginUsuario(username);
-  const hash = await getHashPassword(password);
-  const esValida = await validaPassAlmacenada(hash, contrasena_login);
-  if (username === nombre_usuario && esValida) {
+  const { data: detUser, details, statusCode } = await bd.detalleLoginUsuario(username);
+  if (statusCode !== 200) {
+    return {
+      statusCode,
+      details,
+      data: { token: '' },
+    };
+  }
+  const { contrasenaLogin, nombreUsuario } = detUser;
+  const esValida = await validaPassAlmacenada(password, contrasenaLogin);
+  if (username === nombreUsuario && esValida) {
     const token = generateToken<{ usuario: string }>({ usuario: username });
     return {
-      codigoHttp: 200,
-      detalles: 'ok',
-      resultado: { token },
+      statusCode: 200,
+      details: 'ok',
+      data: { token },
     };
   }
   return {
-    codigoHttp: 403,
-    detalles: 'Invalid credentials',
+    statusCode: 403,
+    details: 'Invalid credentials',
+    data: { token: '' },
   };
 };
-
-export const generaNombreUsuario = async (): Promise<string> => generateRandomString(15);

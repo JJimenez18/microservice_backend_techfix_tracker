@@ -1,16 +1,31 @@
 export interface IToken {
-	idEmpleado: string;
-	token: string;
-	idFormador: string;
-	nombreFormador: string;
-	tokenFormador: string;
-	fechaModifico: string;
-	estatus: string;
-	descripcion: string;
+  idEmpleado: string;
+  token: string;
+  idFormador: string;
+  nombreFormador: string;
+  tokenFormador: string;
+  fechaModifico: string;
+  estatus: string;
+  descripcion: string;
 }
 
 export interface ICredencialesLoginO {
-	id_login: string;
-	nombre_usuario: string;
-	contrasena_login: string;
+  idLogin: string;
+  nombreUsuario: string;
+  contrasenaLogin: string;
+}
+
+export interface IDireccionesUsuariosO {
+  // usuario: string;
+  idDireccion: number;
+  calle: string;
+  numeroInterior: string;
+  numeroExterior: string;
+  codigoPostal: string;
+  referencias: string;
+}
+
+export interface IRespDBGenericaO {
+  mensaje: string;
+  estatus: number;
 }

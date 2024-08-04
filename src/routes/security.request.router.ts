@@ -1,7 +1,7 @@
 import { ValidadorErroresParametros } from '@chtalent/apis-common';
 import { AppRouter } from '../config/app-router';
 import { SecurityController } from './controller/security.request.controller';
-import { authenticateJWT } from './middleware/authMiddleware';
+import { authenticateJWT, validateAuthorization } from './middleware/authMiddleware';
 import { generaTokenValidation } from './middleware/security.request.validator';
 
 export class SecurityRouter {
@@ -19,6 +19,7 @@ export class SecurityRouter {
     const controlador = new SecurityController();
     router.post(
       '/oauth2/v1/token',
+      validateAuthorization,
       generaTokenValidation(),
       ValidadorErroresParametros.validar,
       controlador.tokenGenerate,

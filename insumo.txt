@@ -1,0 +1,8 @@
+/microservices/techfix-tracker/v1/oauth2/v1/token
+
+403
+user: jjimenez18,
+pass: 12345
+201
+user: jjimenez18,
+pass: 1234

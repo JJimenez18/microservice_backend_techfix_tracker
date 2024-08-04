@@ -7,20 +7,18 @@ const keyLength = 64;
 const digest = 'sha512';
 
 // Función para generar un hash de contraseña
-export const getHashPassword = (password: string): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    // Generar un salt aleatorio
-    const salt = randomBytes(saltLength).toString('hex');
+export const getHashPassword = (password: string): Promise<string> => new Promise((resolve, reject) => {
+  // Generar un salt aleatorio
+  const salt = randomBytes(saltLength).toString('hex');
 
-    // Generar el hash usando PBKDF2
-    pbkdf2(password, salt, iterations, keyLength, digest, (err, derivedKey) => {
-      if (err) return reject(err);
+  // Generar el hash usando PBKDF2
+  pbkdf2(password, salt, iterations, keyLength, digest, (err, derivedKey) => {
+    if (err) return reject(err);
 
-      // Devuelve el hash en formato: salt:hash
-      resolve(`${salt}:${derivedKey.toString('hex')}`);
-    });
+    // Devuelve el hash en formato: salt:hash
+    resolve(`${salt}:${derivedKey.toString('hex')}`);
   });
-}
+});
 
 // Función para verificar una contraseña
 function verifyPassword(password: string, hash: string): Promise<boolean> {
@@ -68,14 +66,13 @@ getHashPassword(myPlaintextPassword)
   });
  */
 
-export const validaPassAlmacenada = async (passRequest: string, hashDB: string):Promise<boolean>  => {
-  console.log(`Hash almacenado: ${hashDB}`);
+export const validaPassAlmacenada = async (passRequest: string, hashDB: string):Promise<boolean> => {
+  // console.log(`hashDB almacenado: ${hashDB}`);
   try {
     const match = await verifyPassword(passRequest, hashDB);
-    console.log(`Contraseña correcta: ${match}`); // true
-    return true;
+    // console.log(`Contraseña correcta: ${match}`); // true
+    return match;
   } catch (err) {
-    console.error(err);
     return false;
   }
-}
+};

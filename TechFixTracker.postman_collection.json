@@ -1,0 +1,325 @@
+{
+	"info": {
+		"_postman_id": "65a76f20-2837-4752-a70d-f82f248a2aec",
+		"name": "TechFixTracker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15865950",
+		"_collection_link": "https://lively-eclipse-220458.postman.co/workspace/My-Workspace~775f9be3-7ef0-48a6-8dfb-cf7c2ef69b22/collection/15865950-65a76f20-2837-4752-a70d-f82f248a2aec?action=share&source=collection_link&creator=15865950"
+	},
+	"item": [
+		{
+			"name": "oauth2",
+			"item": [
+				{
+					"name": "oauth2/v1/token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jjimenez18",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{elb}}/microservices/techfix-tracker/v1/oauth2/v1/token",
+							"host": [
+								"{{elb}}"
+							],
+							"path": [
+								"microservices",
+								"techfix-tracker",
+								"v1",
+								"oauth2",
+								"v1",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "oauth2/verifica/token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{elb}}/microservices/techfix-tracker/v1/oauth2/verifica/token",
+							"host": [
+								"{{elb}}"
+							],
+							"path": [
+								"microservices",
+								"techfix-tracker",
+								"v1",
+								"oauth2",
+								"verifica",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Eduardo jimenez\",\r\n    \"telefono\": \"7831264290\",\r\n    \"email\": \"asajksa@hola.com\",\r\n    \"contrasenia\": \"1234sdisad8787dsa\",\r\n    \"nombreUsuario\": \"jjimenez182\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{elb}}/microservices/techfix-tracker/v1/users",
+							"host": [
+								"{{elb}}"
+							],
+							"path": [
+								"microservices",
+								"techfix-tracker",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users/username",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Eduardo jimenez\",\r\n    \"telefono\": \"7831264290\",\r\n    \"email\": \"asajksa@hola.com\",\r\n    \"contrasenia\": \"1234sdisad8787dsa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{elb}}/microservices/techfix-tracker/v1/users/username?nombreUsuario=jjimenez183",
+							"host": [
+								"{{elb}}"
+							],
+							"path": [
+								"microservices",
+								"techfix-tracker",
+								"v1",
+								"users",
+								"username"
+							],
+							"query": [
+								{
+									"key": "nombreUsuario",
+									"value": "jjimenez183"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users/address",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{elb}}/microservices/techfix-tracker/v1/users/address",
+							"host": [
+								"{{elb}}"
+							],
+							"path": [
+								"microservices",
+								"techfix-tracker",
+								"v1",
+								"users",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users/address/:idDireccion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{elb}}/microservices/techfix-tracker/v1/users/address/:idDireccion",
+							"host": [
+								"{{elb}}"
+							],
+							"path": [
+								"microservices",
+								"techfix-tracker",
+								"v1",
+								"users",
+								"address",
+								":idDireccion"
+							],
+							"variable": [
+								{
+									"key": "idDireccion",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users/address",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"calle\": \"general aureliano\",\r\n    \"numeroExterior\": \"12\",\r\n    \"codigoPostal\": \"01089\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{elb}}/microservices/techfix-tracker/v1/users/address",
+							"host": [
+								"{{elb}}"
+							],
+							"path": [
+								"microservices",
+								"techfix-tracker",
+								"v1",
+								"users",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users/address/:idDireccion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{elb}}/microservices/techfix-tracker/v1/users/address/:idDireccion",
+							"host": [
+								"{{elb}}"
+							],
+							"path": [
+								"microservices",
+								"techfix-tracker",
+								"v1",
+								"users",
+								"address",
+								":idDireccion"
+							],
+							"variable": [
+								{
+									"key": "idDireccion",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

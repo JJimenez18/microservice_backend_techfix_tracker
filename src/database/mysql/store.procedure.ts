@@ -19,6 +19,54 @@ export class SpListas {
     llamarSP: this.llamarSP,
   };
 
+  public VALIDA_NOMBRE_USUARIO_DISPONIBLE: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'SP_usuario_disponible',
+    numParams: 1,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
+  public DIRECCIONES_USUARIO: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'SP_Consulta_Direcciones',
+    numParams: 1,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
+  public DIRECCIONES_ID: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'SP_Consulta_Direccion_ID',
+    numParams: 2,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
+  public DELETE_DIRECCIONES_ID: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'SP_Borrado_Direcciones',
+    numParams: 2,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
+  public REGISTRA_USUARIO: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'SP_Alta_Usuario',
+    numParams: 5,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
+  public REGISTRA_DIRECCION_USUARIO: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'SP_Alta_Direcciones',
+    numParams: 6,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
   llamarSP(this: ISPDetalle): string {
     return `CALL ${this.nombreDb}.${this.nombreSp}${this.parametros()}`;
   }
