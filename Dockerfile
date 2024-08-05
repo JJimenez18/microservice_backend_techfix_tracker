@@ -1,5 +1,5 @@
 FROM node:12.18.3-alpine as buildnode
-LABEL stage="builder_inventarios"
+LABEL stage="builder_techfix_tracker"
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
