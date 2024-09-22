@@ -4,7 +4,7 @@ import { ConfiguracionVariables } from '../config/configuracion-variables-entorn
 const secretKey = ConfiguracionVariables.JWT_SECRET_KEY;
 
 // eslint-disable-next-line max-len
-export const generateToken = <T> (payload: T): string => jwt.sign(payload as any, secretKey, { expiresIn: '1h' });
+export const generateToken = <T> (payload: T): string => jwt.sign(payload as any, secretKey, { expiresIn: '1m' });
 
 export const verifyToken = (token: string): any => {
   try {

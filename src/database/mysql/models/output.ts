@@ -13,6 +13,7 @@ export interface ICredencialesLoginO {
   idLogin: string;
   nombreUsuario: string;
   contrasenaLogin: string;
+  email: string;
 }
 
 export interface IDireccionesUsuariosO {

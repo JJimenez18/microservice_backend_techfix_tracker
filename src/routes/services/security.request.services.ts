@@ -18,12 +18,12 @@ export const generaTokenServices = async (data: {
       data: { token: '' },
     };
   }
-  const { contrasenaLogin, nombreUsuario } = detUser;
+  const { contrasenaLogin, email } = detUser;
   const esValida = await validaPassAlmacenada(password, contrasenaLogin);
-  if (username === nombreUsuario && esValida) {
+  if (username === email && esValida) {
     const token = generateToken<{ usuario: string }>({ usuario: username });
     return {
-      statusCode: 200,
+      statusCode: 201,
       details: 'ok',
       data: { token },
     };
