@@ -35,6 +35,22 @@ export class SpListas {
     llamarSP: this.llamarSP,
   };
 
+  public DIRECCIONES_CLIENTES: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'SP_Consulta_Direcciones_Clientes',
+    numParams: 1,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
+  public DIRECCIONES_CLIENTES_ID: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'SP_Consulta_Clientes_Direcciones_ID',
+    numParams: 2,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
   public DIRECCIONES_ID: ISPDetalle = {
     nombreDb: this.nombreDb,
     nombreSp: 'SP_Consulta_Direccion_ID',
@@ -63,6 +79,22 @@ export class SpListas {
     nombreDb: this.nombreDb,
     nombreSp: 'SP_Alta_Direcciones',
     numParams: 6,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
+  public REGISTRA_DIRECCION_CLIENTE: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'SP_Alta_Direcciones_Clientes',
+    numParams: 6,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
+  public CONSULTA_CLIENTES: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'SP_consulta_Clientes',
+    numParams: 0,
     parametros: this.getParams,
     llamarSP: this.llamarSP,
   };

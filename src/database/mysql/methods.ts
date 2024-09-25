@@ -6,6 +6,7 @@ import { IRespDBGenericaO, ICredencialesLoginO, IDireccionesUsuariosO } from './
 import { EMensajesError } from '../../enums/general.enum';
 import { IRespGen } from '../../models/general';
 import { IAddressUsers, IDetalleUsuario } from '../../routes/models/users.models';
+import { clientsGET } from '../../routes/models/clients.models';
 
 export class MetodosBD {
   private static instance: MetodosBD;
@@ -68,6 +69,58 @@ export class MetodosBD {
       data: Number(resultado[0].seEncontro),
       details: 'ok',
       statusCode: [0].includes(Number(resultado[0].seEncontro)) ? 204 : 400,
+    };
+  };
+
+  public direccionesClientes = async (nombreUsuario: string): Promise<IRespGen<IDireccionesUsuariosO[]>> => {
+    let resultado: IDireccionesUsuariosO[] = [];
+    const params: ISPParams = {
+      nombre: this.spListas.DIRECCIONES_CLIENTES.llamarSP(),
+      parametros: [nombreUsuario],
+    };
+    try {
+      resultado = await this.db.ejecutarSP<IDireccionesUsuariosO>(params);
+      // console.log(resultado, resultado.length);
+      if (resultado.length === 0) {
+        return {
+          data: [],
+          details: EMensajesError.NOT_FOUND,
+          statusCode: 204,
+        };
+      }
+    } catch (error) {
+      throw errorApi.errorInternoServidor.bd(EMensajesError.ERROR, 5003);
+    }
+    return {
+      data: resultado,
+      details: 'ok',
+      statusCode: 200,
+    };
+  };
+
+  public direccionesClientesPorID = async (nombreUsuario: string, id: number): Promise<IRespGen<IDireccionesUsuariosO>> => {
+    let resultado: IDireccionesUsuariosO[] = [];
+    const params: ISPParams = {
+      nombre: this.spListas.DIRECCIONES_CLIENTES_ID.llamarSP(),
+      parametros: [nombreUsuario, id],
+    };
+    try {
+      resultado = await this.db.ejecutarSP<IDireccionesUsuariosO>(params);
+      // console.log(resultado, resultado.length);
+      if (resultado.length === 0) {
+        return {
+          data: {} as IDireccionesUsuariosO,
+          details: EMensajesError.NOT_FOUND,
+          statusCode: 204,
+        };
+      }
+    } catch (error) {
+      throw errorApi.errorInternoServidor.bd(EMensajesError.ERROR, 5003);
+    }
+    return {
+      data: resultado[0],
+      details: 'ok',
+      statusCode: 200,
     };
   };
 
@@ -142,6 +195,51 @@ export class MetodosBD {
     };
   };
 
+  public direccionesClientesPorIDDelete = async (id: number): Promise<IRespGen<string>> => {
+    let resultado: IRespDBGenericaO[] = [];
+    const params: ISPParams = {
+      nombre: this.spListas.DELETE_DIRECCIONES_ID.llamarSP(),
+      parametros: [id],
+    };
+    try {
+      resultado = await this.db.ejecutarSP<IRespDBGenericaO>(params);
+      // console.log(resultado, resultado.length);
+    } catch (error) {
+      throw errorApi.errorInternoServidor.bd(EMensajesError.ERROR, 5003);
+    }
+    return {
+      data: resultado[0].mensaje,
+      details: 'ok',
+      statusCode: Number(resultado[0].estatus) === 0 ? 204 : 200,
+    };
+  };
+
+  public consultaClientes = async (): Promise<IRespGen<clientsGET[]>> => {
+    let resultado: clientsGET[] = [];
+    const params: ISPParams = {
+      nombre: this.spListas.CONSULTA_CLIENTES.llamarSP(),
+      parametros: [],
+    };
+    try {
+      resultado = await this.db.ejecutarSP<clientsGET>(params);
+      // console.log(resultado, resultado.length);
+      if (resultado.length === 0) {
+        return {
+          data: [],
+          details: EMensajesError.NOT_FOUND,
+          statusCode: 204,
+        };
+      }
+    } catch (error) {
+      throw errorApi.errorInternoServidor.bd(EMensajesError.ERROR, 5005);
+    }
+    return {
+      data: resultado,
+      details: EMensajesError.CREATE,
+      statusCode: 200,
+    };
+  };
+
   public registroUsuario = async (alta: IDetalleUsuario): Promise<IRespGen<IRespDBGenericaO[]>> => {
     const {
       contrasenia, nombre, nombreUsuario, telefono, correoElectronico,
@@ -179,6 +277,29 @@ export class MetodosBD {
     const params: ISPParams = {
       nombre: this.spListas.REGISTRA_DIRECCION_USUARIO.llamarSP(),
       parametros: [nombreUsuario, calle, numeroInterior ?? '', numeroExterior ?? '', codigoPostal, referencias ?? ''],
+    };
+    // console.log(JSON.stringify(params.parametros));
+    try {
+      resultado = await this.db.ejecutarSP<IRespDBGenericaO>(params);
+      // console.log(resultado, resultado.length);
+    } catch (error) {
+      throw errorApi.errorInternoServidor.bd(EMensajesError.ERROR, 5006);
+    }
+    return {
+      data: resultado,
+      details: EMensajesError.CREATE,
+      statusCode: 201,
+    };
+  };
+
+  public registroDireccionCliente = async (alta: IAddressUsers): Promise<IRespGen<IRespDBGenericaO[]>> => {
+    const {
+      idUsuario, calle, numeroInterior, numeroExterior, referencias, codigoPostal,
+    } = alta;
+    let resultado: IRespDBGenericaO[] = [];
+    const params: ISPParams = {
+      nombre: this.spListas.REGISTRA_DIRECCION_CLIENTE.llamarSP(),
+      parametros: [idUsuario, calle, numeroInterior ?? '', numeroExterior ?? '', codigoPostal, referencias ?? ''],
     };
     // console.log(JSON.stringify(params.parametros));
     try {

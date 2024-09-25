@@ -23,6 +23,7 @@ export interface IAddressUsersPost extends Request {
 }
 
 export interface IAddressUsers {
+  idUsuario: number;
   nombreUsuario: string;
   calle: string;
   numeroInterior: string;
