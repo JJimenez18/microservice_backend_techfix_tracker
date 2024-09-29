@@ -31,6 +31,14 @@ export class ClientsRouter {
       controlador.clientsPost,
     );
 
+    router.post(
+      '/clients/address',
+      authenticateJWT,
+      addressClientValidationPOST(),
+      ValidadorErroresParametros.validar,
+      controlador.addressClientsPOST,
+    );
+
     router.get(
       '/clients/address/:idUsuario',
       authenticateJWT,
@@ -41,14 +49,6 @@ export class ClientsRouter {
       '/clients/address/:idUsuario/:idDireccion',
       authenticateJWT,
       controlador.addressIDClientsGet,
-    );
-
-    router.post(
-      '/clients/address',
-      authenticateJWT,
-      addressClientValidationPOST(),
-      ValidadorErroresParametros.validar,
-      controlador.addressClientsPOST,
     );
 
     router.delete(

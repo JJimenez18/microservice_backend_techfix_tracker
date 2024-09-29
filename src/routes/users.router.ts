@@ -1,9 +1,10 @@
 import { ValidadorErroresParametros } from '@chtalent/apis-common';
 import { AppRouter } from '../config/app-router';
-import { addressValidationGet, addressValidationPOST, userNameValidationGet, userValidationPost } from './middleware/user.validator';
+import {
+  addressValidationGet, addressValidationPOST, userNameValidationGet, userValidationPost,
+} from './middleware/user.validator';
 import { authenticateJWT } from './middleware/authMiddleware';
 import { UsersController } from './controller/users.controller';
-import { addressUsersPostServices } from './services/users.services';
 
 export class UsersRouter {
   private static instance: UsersRouter;

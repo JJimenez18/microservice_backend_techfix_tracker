@@ -15,27 +15,6 @@ export const clientsValidationPost = (): Array<ValidationChain> => [
     .bail()
     .isLength({ min: 10 })
     .withMessage('telefono debe contener minimo 10 carácteres'),
-  body('correoElectronico')
-    .notEmpty()
-    .trim()
-    .withMessage('correoElectronico es obligatorio')
-    .bail()
-    .isEmail()
-    .withMessage('correoElectronico proporcionado no es valido'),
-  body('contrasenia')
-    .notEmpty()
-    .trim()
-    .withMessage('contrasenia es obligatorio')
-    .bail()
-    .isLength({ min: 12 })
-    .withMessage('contrasenia debe contener minimo 12 carácteres'),
-  body('nombreUsuario')
-    .notEmpty()
-    .trim()
-    .withMessage('nombreUsuario es obligatorio')
-    .bail()
-    .isLength({ min: 8 })
-    .withMessage('nombreUsuario debe contener minimo 8 carácteres'),
 ];
 
 export const addressClientValidationPOST = (): Array<ValidationChain> => [

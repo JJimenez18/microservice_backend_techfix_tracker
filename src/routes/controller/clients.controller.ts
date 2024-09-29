@@ -1,12 +1,13 @@
 /* eslint-disable max-len */
 import { Response, Request } from 'express';
-import { IAddressUsersPost, IUsersPost } from '../models/users.models';
+import { IAddressUsersPost } from '../models/users.models';
 import { middlewareResponse } from '../../helpers/ayudas';
 import {
   clientsPostServices, addressClientsPostServices, clientsAddressIDGetServices, clientsAddressIDDeleteServices,
   clientsGetServices,
   clientsAddressGetServices,
 } from '../services/clients.services';
+import { clientsPostReq } from '../models/clients.models';
 
 export class ClientsController {
   public clientsGET = async (solicitud: Request, respuesta: Response): Promise<Response> => {
@@ -16,7 +17,7 @@ export class ClientsController {
     });
   }
 
-  public clientsPost = async (solicitud: IUsersPost, respuesta: Response): Promise<Response> => {
+  public clientsPost = async (solicitud: clientsPostReq, respuesta: Response): Promise<Response> => {
     const { statusCode, details } = await clientsPostServices({ ...solicitud.body });
     return middlewareResponse({ respuesta, statusCode, mensaje: details });
   }

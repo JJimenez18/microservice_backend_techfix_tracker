@@ -29,7 +29,7 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
       const decoded = verifyToken(token);
       // console.log(decoded);
       req.body.nombreUsuario = decoded.usuario;
-      // console.log(req.body);
+      console.log(req.body);
       next();
     } catch (err) {
       return validaErrores({ codigoHttp: 403 });

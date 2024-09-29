@@ -7,6 +7,7 @@ import { ConfiguracionBaseDeDatos } from './configuracion-base-datos';
 import { SecurityRouter } from '../routes/security.request.router';
 import { UsersRouter } from '../routes/users.router';
 import { ClientsRouter } from '../routes/clients.router';
+import { DeviceRouter } from '../routes/device.router';
 
 export class ConfiguracionRutas {
   private static instance: ConfiguracionRutas;
@@ -27,6 +28,7 @@ export class ConfiguracionRutas {
     SecurityRouter.getInstance().inicializar();
     UsersRouter.getInstance().inicializar();
     ClientsRouter.getInstance().inicializar();
+    DeviceRouter.getInstance().inicializar();
 
     RutaPorDefecto.getInstance().inicializar(AppRouter.getInstance());
     RutaError.getInstance().inicializar(AppRouter.getInstance());

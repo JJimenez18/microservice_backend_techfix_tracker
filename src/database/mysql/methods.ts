@@ -2,11 +2,14 @@
 import { errorApi } from '@chtalent/apis-common';
 import { ConfiguracionBaseDeDatos, ISPParams } from '../../config/configuracion-base-datos';
 import { SpListas } from './store.procedure';
-import { IRespDBGenericaO, ICredencialesLoginO, IDireccionesUsuariosO } from './models/output';
+import {
+  IRespDBGenericaO, ICredencialesLoginO, IDireccionesUsuariosO, IConsultaDispositivosO,
+} from './models/output';
 import { EMensajesError } from '../../enums/general.enum';
 import { IRespGen } from '../../models/general';
 import { IAddressUsers, IDetalleUsuario } from '../../routes/models/users.models';
-import { clientsGET } from '../../routes/models/clients.models';
+import { clientsGET, clientsPOST } from '../../routes/models/clients.models';
+import { IAltaDispositivo, IConsultaDispositivos, IConsultaTiposDispositivos } from './models/input';
 
 export class MetodosBD {
   private static instance: MetodosBD;
@@ -61,7 +64,7 @@ export class MetodosBD {
     };
     try {
       resultado = await this.db.ejecutarSP<{ seEncontro: string }>(params);
-      console.log(resultado, resultado.length);
+      // console.log(resultado, resultado.length);
     } catch (error) {
       throw errorApi.errorInternoServidor.bd(EMensajesError.ERROR, 5002);
     }
@@ -269,6 +272,35 @@ export class MetodosBD {
     };
   };
 
+  public registroClientes = async (alta: clientsPOST): Promise<IRespGen<IRespDBGenericaO[]>> => {
+    const {
+      nombre, telefono,
+    } = alta;
+    let resultado: IRespDBGenericaO[] = [];
+    const params: ISPParams = {
+      nombre: this.spListas.REGISTRA_CLIENTES.llamarSP(),
+      parametros: [nombre, telefono],
+    };
+    try {
+      resultado = await this.db.ejecutarSP<IRespDBGenericaO>(params);
+      // console.log(resultado, resultado.length);
+      if (resultado.length === 1 && [0].includes(Number(resultado[0].estatus))) {
+        return {
+          data: [],
+          details: 'El usuario proporcionado se encuentra registrado',
+          statusCode: 400,
+        };
+      }
+    } catch (error) {
+      throw errorApi.errorInternoServidor.bd(EMensajesError.ERROR, 5005);
+    }
+    return {
+      data: resultado,
+      details: EMensajesError.CREATE,
+      statusCode: 201,
+    };
+  };
+
   public registroDireccionUsuario = async (alta: IAddressUsers): Promise<IRespGen<IRespDBGenericaO[]>> => {
     const {
       nombreUsuario, calle, numeroInterior, numeroExterior, referencias, codigoPostal,
@@ -312,6 +344,91 @@ export class MetodosBD {
       data: resultado,
       details: EMensajesError.CREATE,
       statusCode: 201,
+    };
+  };
+
+  public registroDispositivos = async (data: IAltaDispositivo): Promise<IRespGen<IRespDBGenericaO[]>> => {
+    let resultado: IRespDBGenericaO[] = [];
+    const params: ISPParams = {
+      nombre: this.spListas.ALTA_DISPOSITIVO.llamarSP(),
+      parametros: [
+        data.nombreUsuario,
+        data.idTipoDispositivo,
+        data.serie ?? '',
+        data.marca ?? '',
+        data.modelo,
+        data.descripcionVisual ?? '',
+        data.descripcionFalla ?? '',
+        data.idCliente,
+      ],
+    };
+    // console.log(JSON.stringify(params.parametros));
+    try {
+      resultado = await this.db.ejecutarSP<IRespDBGenericaO>(params);
+      // console.log(resultado, resultado.length);
+    } catch (error) {
+      throw errorApi.errorInternoServidor.bd(EMensajesError.ERROR, 5006);
+    }
+    return {
+      data: resultado,
+      details: EMensajesError.CREATE,
+      statusCode: 201,
+    };
+  };
+
+  public ConsultaDispositivos = async (data: IConsultaDispositivos): Promise<IRespGen<IConsultaDispositivosO[]>> => {
+    const {
+      nombreUsuario, idDispositivo,
+    } = data;
+    let resultado: IConsultaDispositivosO[] = [];
+    const params: ISPParams = {
+      nombre: this.spListas.CONSULTA_DISPOSITIVO.llamarSP(),
+      parametros: [nombreUsuario, idDispositivo || null],
+    };
+    // console.log(JSON.stringify(params.parametros));
+    try {
+      resultado = await this.db.ejecutarSP<IConsultaDispositivosO>(params);
+      // console.log(resultado, resultado.length);
+      if (resultado.length === 0) {
+        return {
+          data: [],
+          details: EMensajesError.NOT_FOUND,
+          statusCode: 204,
+        };
+      }
+    } catch (error) {
+      throw errorApi.errorInternoServidor.bd(EMensajesError.ERROR, 5006);
+    }
+    return {
+      data: resultado,
+      details: EMensajesError.CREATE,
+      statusCode: 200,
+    };
+  };
+
+  public consultaTiposDispositivos = async (): Promise<IRespGen<IConsultaTiposDispositivos[]>> => {
+    let resultado: IConsultaTiposDispositivos[] = [];
+    const params: ISPParams = {
+      nombre: this.spListas.CONSULTA_DISPOSITIVO_TIPOS.llamarSP(),
+      parametros: [],
+    };
+    try {
+      resultado = await this.db.ejecutarSP<IConsultaTiposDispositivos>(params);
+      // console.log(resultado, resultado.length);
+      if (resultado.length === 0) {
+        return {
+          data: [],
+          details: EMensajesError.NOT_FOUND,
+          statusCode: 204,
+        };
+      }
+    } catch (error) {
+      throw errorApi.errorInternoServidor.bd(EMensajesError.ERROR, 5006);
+    }
+    return {
+      data: resultado,
+      details: EMensajesError.CREATE,
+      statusCode: 200,
     };
   };
 }

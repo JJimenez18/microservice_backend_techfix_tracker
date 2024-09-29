@@ -75,6 +75,14 @@ export class SpListas {
     llamarSP: this.llamarSP,
   };
 
+  public REGISTRA_CLIENTES: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'SP_Alta_Clientes',
+    numParams: 2,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
   public REGISTRA_DIRECCION_USUARIO: ISPDetalle = {
     nombreDb: this.nombreDb,
     nombreSp: 'SP_Alta_Direcciones',
@@ -94,6 +102,30 @@ export class SpListas {
   public CONSULTA_CLIENTES: ISPDetalle = {
     nombreDb: this.nombreDb,
     nombreSp: 'SP_consulta_Clientes',
+    numParams: 0,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
+  public ALTA_DISPOSITIVO: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'SP_Alta_Dispositivos',
+    numParams: 8,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
+  public CONSULTA_DISPOSITIVO: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'SP_Consulta_Dispositivos',
+    numParams: 2,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
+  public CONSULTA_DISPOSITIVO_TIPOS: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'SP_Dispositivos_tipos',
     numParams: 0,
     parametros: this.getParams,
     llamarSP: this.llamarSP,

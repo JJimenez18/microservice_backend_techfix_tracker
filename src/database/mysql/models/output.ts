@@ -30,3 +30,16 @@ export interface IRespDBGenericaO {
   mensaje: string;
   estatus: number;
 }
+
+export interface IConsultaDispositivosO {
+  idDispositivo: number;
+  nombreUsuario: string;
+  idTipoDispositivo: number;
+  serie: string;
+  marca: string;
+  modelo: string;
+  descripcionVisual: string;
+  descripcionFalla: string;
+  fechaRegistro: string;
+  idEstatusDispositivo: number;
+}
