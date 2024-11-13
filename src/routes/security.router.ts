@@ -1,6 +1,6 @@
 import { ValidadorErroresParametros } from '@chtalent/apis-common';
 import { AppRouter } from '../config/app-router';
-import { SecurityController } from './controller/security.request.controller';
+import { SecurityController } from './controller/security.controller';
 import { authenticateJWT, validateAuthorization } from './middleware/authMiddleware';
 import { generaTokenValidation } from './middleware/security.request.validator';
 

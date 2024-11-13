@@ -27,6 +27,11 @@ export const userNamePostServices = async (userName: string): Promise<IRespGen<n
   return resp;
 };
 
+export const techniciansGetServices = async (userName: string): Promise<IRespGen<number>> => {
+  const resp = await bd.nombreUsuarioDisponible(userName);
+  return resp;
+};
+
 export const usernameAddressGetServices = async (userName: string): Promise<IRespGen<IDireccionesUsuariosO[]>> => {
   // const { data } = await userNamePostServices(userName);
   // if ([0].includes(data)) {

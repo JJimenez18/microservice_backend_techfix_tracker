@@ -2,9 +2,8 @@
 import { MetodosBD } from '../../database/mysql/methods';
 import { IRespDBGenericaO, IDireccionesUsuariosO } from '../../database/mysql/models/output';
 import { IRespGen } from '../../models/general';
-import { getHashPassword } from '../../utils/hashUtil';
 import { clientsGET, clientsPOST } from '../models/clients.models';
-import { IAddressUsers, IDetalleUsuario } from '../models/users.models';
+import { IAddressUsers } from '../models/users.models';
 
 const bd = MetodosBD.getInstance();
 

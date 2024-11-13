@@ -14,6 +14,7 @@ export interface ICredencialesLoginO {
   nombreUsuario: string;
   contrasenaLogin: string;
   email: string;
+  idTipoUsuario: number;
 }
 
 export interface IDireccionesUsuariosO {
@@ -42,4 +43,15 @@ export interface IConsultaDispositivosO {
   descripcionFalla: string;
   fechaRegistro: string;
   idEstatusDispositivo: number;
+  idCliente: number;
+  nombreCliente: string;
+  descTipoDispositivo: string;
+}
+
+export interface IConsultaFallasDispositivos {
+  idDispositivo: string;
+  idTecnicoRegistra: string;
+  descripcion: string;
+  reparacionSugerida: string;
+  fechaModificacion: string;
 }

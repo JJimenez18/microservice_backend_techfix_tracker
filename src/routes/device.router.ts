@@ -1,12 +1,9 @@
 import { ValidadorErroresParametros } from '@chtalent/apis-common';
 import { AppRouter } from '../config/app-router';
-import {
-  addressValidationPOST,
-} from './middleware/user.validator';
 import { authenticateJWT } from './middleware/authMiddleware';
 import { DeviceController } from './controller/device.controller';
 import { nombreUsuarioValidation } from './middleware/general.validator';
-import { deviceValidationPost } from './middleware/device.validator';
+import { deviceFailuresPOST, deviceValidationPost } from './middleware/device.validator';
 
 export class DeviceRouter {
   private static instance: DeviceRouter;
@@ -45,11 +42,12 @@ export class DeviceRouter {
       controlador.devicesPost,
     );
 
+    // Pendiente
     router.put(
       '/device',
       authenticateJWT,
-      addressValidationPOST(),
-      ValidadorErroresParametros.validar,
+      // addressValidationPOST(),
+      // ValidadorErroresParametros.validar,
       controlador.devicesPut,
     );
 
@@ -59,11 +57,11 @@ export class DeviceRouter {
       controlador.devicesTiposGet,
     );
 
-    router.get(
-      '/device/status',
-      authenticateJWT,
-      controlador.devicesPut,
-    );
+    // router.get(
+    //   '/device/status',
+    //   authenticateJWT,
+    //   controlador.devicesPut,
+    // );
 
     router.put(
       '/device/status',
@@ -74,7 +72,7 @@ export class DeviceRouter {
     router.post(
       '/device/failures',
       authenticateJWT,
-      addressValidationPOST(),
+      deviceFailuresPOST(),
       ValidadorErroresParametros.validar,
       controlador.failuresDevicePost,
     );
@@ -82,9 +80,17 @@ export class DeviceRouter {
     router.post(
       '/device/failures/evidence',
       authenticateJWT,
-      addressValidationPOST(),
-      ValidadorErroresParametros.validar,
+      // addressValidationPOST(),
+      // ValidadorErroresParametros.validar,
       controlador.failuresEvidenceDevicePost,
+    );
+
+    router.post(
+      '/device/failures/reparaciones',
+      authenticateJWT,
+      // addressValidationPOST(),
+      // ValidadorErroresParametros.validar,
+      controlador.failuresDevicePost,
     );
   };
 }

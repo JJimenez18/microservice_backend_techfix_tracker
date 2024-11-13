@@ -3,6 +3,7 @@ import { Response, Request } from 'express';
 import { IAddressUsersPost, IUserNameGet, IUsersPost } from '../models/users.models';
 import {
   addressUsersPostServices,
+  techniciansGetServices,
   usernameAddressGetServices,
   usernameAddressIDDeleteServices,
   usernameAddressIDGetServices,
@@ -16,6 +17,11 @@ export class UsersController {
     const { statusCode, details } = await usersPostServices({ ...solicitud.body });
     return middlewareResponse({ respuesta, statusCode, mensaje: details });
   }
+
+  public techniciansGet = async (solicitud: IUserNameGet, respuesta: Response): Promise<Response> => {
+    const { statusCode, data } = await techniciansGetServices({ ...solicitud.body });
+    return middlewareResponse({ respuesta, statusCode, dataResponse: data });
+  };
 
   public usernameGet = async (solicitud: IUserNameGet, respuesta: Response): Promise<Response> => {
     const { statusCode } = await userNamePostServices(solicitud.query.nombreUsuario);

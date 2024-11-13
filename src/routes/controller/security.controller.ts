@@ -8,7 +8,7 @@ export class SecurityController {
   public tokenGenerate = async (solicitud: IGeneraToken, respuesta: Response): Promise<Response> => {
     const { statusCode, data, details } = await generaTokenServices({ ...solicitud.body });
     return middlewareResponse({
-      respuesta, statusCode, mensaje: details, dataResponse: { token: data.token },
+      respuesta, statusCode, mensaje: details, dataResponse: data,
     });
   };
 

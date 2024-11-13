@@ -110,7 +110,7 @@ export class SpListas {
   public ALTA_DISPOSITIVO: ISPDetalle = {
     nombreDb: this.nombreDb,
     nombreSp: 'SP_Alta_Dispositivos',
-    numParams: 8,
+    numParams: 9,
     parametros: this.getParams,
     llamarSP: this.llamarSP,
   };
@@ -127,6 +127,22 @@ export class SpListas {
     nombreDb: this.nombreDb,
     nombreSp: 'SP_Dispositivos_tipos',
     numParams: 0,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
+  public REGISTRO_FALLAS_DISPOSITIVO: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'SP_RegistrarFallaDispositivo',
+    numParams: 4,
+    parametros: this.getParams,
+    llamarSP: this.llamarSP,
+  };
+
+  public CONSULTA_FALLAS_DISPOSITIVO: ISPDetalle = {
+    nombreDb: this.nombreDb,
+    nombreSp: 'sp_consulta_fallas_dispositivos',
+    numParams: 1,
     parametros: this.getParams,
     llamarSP: this.llamarSP,
   };

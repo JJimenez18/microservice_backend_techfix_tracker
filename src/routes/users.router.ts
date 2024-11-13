@@ -21,10 +21,18 @@ export class UsersRouter {
     const controlador = new UsersController();
     router.post(
       '/users',
-      // authenticateJWT,
+      authenticateJWT,
       userValidationPost(),
       ValidadorErroresParametros.validar,
       controlador.userPost,
+    );
+
+    router.get(
+      '/technicians',
+      authenticateJWT,
+      // userValidationPost(),
+      // ValidadorErroresParametros.validar,
+      controlador.techniciansGet,
     );
 
     router.get(

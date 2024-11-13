@@ -4,7 +4,7 @@ import { AppRouter } from './app-router';
 import { ConfiguracionVariables } from './configuracion-variables-entorno';
 import { App } from './app';
 import { ConfiguracionBaseDeDatos } from './configuracion-base-datos';
-import { SecurityRouter } from '../routes/security.request.router';
+import { SecurityRouter } from '../routes/security.router';
 import { UsersRouter } from '../routes/users.router';
 import { ClientsRouter } from '../routes/clients.router';
 import { DeviceRouter } from '../routes/device.router';

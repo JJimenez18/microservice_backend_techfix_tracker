@@ -4,7 +4,7 @@ export interface ICredencialesLoginI {
 
 export interface IConsultaDispositivos {
   nombreUsuario: string;
-  idDispositivo?: number;
+  idDispositivo?: string;
 }
 
 export interface IConsultaTiposDispositivos {
@@ -21,4 +21,5 @@ export interface IAltaDispositivo {
   descripcionVisual?: string;
   descripcionFalla: string;
   idCliente: number;
+  uuid: string;
 }

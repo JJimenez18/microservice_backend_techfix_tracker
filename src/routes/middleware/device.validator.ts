@@ -66,3 +66,49 @@ export const deviceValidationPost = (): Array<ValidationChain> => [
     .isInt({ min: 1, max: 200000000 })
     .withMessage('idCliente no es valido'),
 ];
+
+export const deviceFailuresPOST = (): Array<ValidationChain> => [
+  body('nombreUsuario')
+    .notEmpty()
+    .trim()
+    .withMessage('nombreUsuario es obligatorio')
+    .bail()
+    .isLength({ min: 8 })
+    .withMessage('nombreUsuario debe contener minimo 8 carácteres'),
+
+  body('idTecnicoRegistra')
+    .notEmpty()
+    .trim()
+    .withMessage('idTecnicoRegistra es obligatorio')
+    .bail()
+    .isInt({ min: 1 })
+    .withMessage('idTecnicoRegistra no es valido'),
+
+  body('folio')
+    .notEmpty()
+    .trim()
+    .withMessage('folio es obligatorio')
+    .bail()
+    .isLength({ min: 3, max: 50 })
+    .withMessage('folio debe contener de 3 - 50 carácteres'),
+
+  body('fallas').isArray({ min: 1 }).withMessage('fallas es un arreglo y debe contener un una falla'),
+
+  body('fallas.*.descripcion')
+    .bail()
+    .trim()
+    .notEmpty()
+    .withMessage('fallas.*.descripcion debe contener informacion'),
+
+  body('fallas.*.descripcion')
+    .bail()
+    .trim()
+    .notEmpty()
+    .withMessage('fallas.*.descripcion debe contener informacion'),
+
+  body('fallas.*.reparacionSugerida')
+    .bail()
+    .trim()
+    .notEmpty()
+    .withMessage('fallas.*.reparacionSugerida debe contener informacion'),
+];

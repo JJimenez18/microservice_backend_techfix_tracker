@@ -4,12 +4,14 @@ import { ConfiguracionBaseDeDatos, ISPParams } from '../../config/configuracion-
 import { SpListas } from './store.procedure';
 import {
   IRespDBGenericaO, ICredencialesLoginO, IDireccionesUsuariosO, IConsultaDispositivosO,
+  IConsultaFallasDispositivos,
 } from './models/output';
 import { EMensajesError } from '../../enums/general.enum';
 import { IRespGen } from '../../models/general';
 import { IAddressUsers, IDetalleUsuario } from '../../routes/models/users.models';
 import { clientsGET, clientsPOST } from '../../routes/models/clients.models';
 import { IAltaDispositivo, IConsultaDispositivos, IConsultaTiposDispositivos } from './models/input';
+import { IAltaFallaDispositivoSP } from '../../routes/models/device.models';
 
 export class MetodosBD {
   private static instance: MetodosBD;
@@ -57,6 +59,25 @@ export class MetodosBD {
   };
 
   public nombreUsuarioDisponible = async (nombreUsuario: string): Promise<IRespGen<number>> => {
+    let resultado: { seEncontro: string }[] = [];
+    const params: ISPParams = {
+      nombre: this.spListas.VALIDA_NOMBRE_USUARIO_DISPONIBLE.llamarSP(),
+      parametros: [nombreUsuario],
+    };
+    try {
+      resultado = await this.db.ejecutarSP<{ seEncontro: string }>(params);
+      // console.log(resultado, resultado.length);
+    } catch (error) {
+      throw errorApi.errorInternoServidor.bd(EMensajesError.ERROR, 5002);
+    }
+    return {
+      data: Number(resultado[0].seEncontro),
+      details: 'ok',
+      statusCode: [0].includes(Number(resultado[0].seEncontro)) ? 204 : 400,
+    };
+  };
+
+  public consultaTechnicians = async (nombreUsuario: string): Promise<IRespGen<number>> => {
     let resultado: { seEncontro: string }[] = [];
     const params: ISPParams = {
       nombre: this.spListas.VALIDA_NOMBRE_USUARIO_DISPONIBLE.llamarSP(),
@@ -360,6 +381,7 @@ export class MetodosBD {
         data.descripcionVisual ?? '',
         data.descripcionFalla ?? '',
         data.idCliente,
+        data.uuid,
       ],
     };
     // console.log(JSON.stringify(params.parametros));
@@ -429,6 +451,58 @@ export class MetodosBD {
       data: resultado,
       details: EMensajesError.CREATE,
       statusCode: 200,
+    };
+  };
+
+  public registroFallaDispositivo = async (alta: IAltaFallaDispositivoSP): Promise<IRespGen<IRespDBGenericaO[]>> => {
+    const {
+      descripcion, folio, idTecnicoRegistra, reparacionSugerida,
+    } = alta;
+    let resultado: IRespDBGenericaO[] = [];
+    const params: ISPParams = {
+      nombre: this.spListas.REGISTRO_FALLAS_DISPOSITIVO.llamarSP(),
+      parametros: [
+        folio,
+        idTecnicoRegistra,
+        descripcion,
+        reparacionSugerida,
+      ],
+    };
+    // console.log(JSON.stringify(params.parametros));
+    try {
+      resultado = await this.db.ejecutarSP<IRespDBGenericaO>(params);
+      // console.log(resultado, resultado.length);
+    } catch (error) {
+      throw errorApi.errorInternoServidor.bd(EMensajesError.ERROR, 5006);
+    }
+    return {
+      data: resultado,
+      details: EMensajesError.CREATE,
+      statusCode: 201,
+    };
+  };
+
+  public consultaFallaDispositivo = async (
+    idDispositivo: string,
+  ): Promise<IRespGen<IConsultaFallasDispositivos[]>> => {
+    let resultado: IConsultaFallasDispositivos[] = [];
+    const params: ISPParams = {
+      nombre: this.spListas.CONSULTA_FALLAS_DISPOSITIVO.llamarSP(),
+      parametros: [
+        idDispositivo,
+      ],
+    };
+    // console.log(JSON.stringify(params.parametros));
+    try {
+      resultado = await this.db.ejecutarSP<IConsultaFallasDispositivos>(params);
+      // console.log(resultado, resultado.length);
+    } catch (error) {
+      throw errorApi.errorInternoServidor.bd(EMensajesError.ERROR, 5006);
+    }
+    return {
+      data: resultado,
+      details: EMensajesError.CREATE,
+      statusCode: 201,
     };
   };
 }
